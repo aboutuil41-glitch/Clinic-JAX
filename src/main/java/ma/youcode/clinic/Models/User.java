@@ -20,7 +20,8 @@ public class User {
     public enum UserRole {
     Doctor,
     Nurse,
-    Specialist
+    SPECIALISTE,
+    GENERALISTE
     }
 
     public int getId() {
