@@ -70,7 +70,7 @@ public class DataInit {
                     + "FOREIGN KEY (specialist_id) REFERENCES specialists(id))");
 
             // ---- Test accounts: 1 generalist, 2 specialists ----
-            ensureUser(conn, "Dr. Alami", "generaliste@clinic.ma", "generaliste123", "GENERALISTE");
+            ensureUser(conn, "Dr. Alami", "generaliste@clinic.ma", "generaliste123", "Doctor");
             int cardioUserId = ensureUser(conn, "Dr. Benani", "cardio@clinic.ma", "specialiste123", "SPECIALISTE");
             int pneumoUserId = ensureUser(conn, "Dr. Chraibi", "pneumo@clinic.ma", "specialiste123", "SPECIALISTE");
 

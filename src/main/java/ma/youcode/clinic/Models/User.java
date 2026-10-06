@@ -21,7 +21,6 @@ public class User {
     Doctor,
     Nurse,
     SPECIALISTE,
-    GENERALISTE
     }
 
     public int getId() {
