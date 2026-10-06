@@ -1,16 +1,27 @@
 package ma.youcode.clinic.Models;
 
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "specialists")
 public class Specialist {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "user_id")
     private int userId;
+
     private int rate;
+
+    @Enumerated(EnumType.STRING)
     private SpecialistList role;
 
-    
     public enum SpecialistList { CARDIOLOGIE, PNEUMOLOGIE, DERMATOLOGIE, NEUROLOGIE, ENDOCRINOLOGIE }
 
-    
+    protected Specialist() { }
+
     public Specialist(int id, int userId, int rate, SpecialistList role) {
         this.id = id;
         this.userId = userId;
@@ -49,5 +60,12 @@ public class Specialist {
     public void setRole(SpecialistList role) {
         this.role = role;
     }
-    
+
+    @OneToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
 }
