@@ -8,10 +8,8 @@ public class Specialist {
     private SpecialistList role;
 
     
-    public enum SpecialistList{
-        DOC,
-        DAC
-    }
+    public enum SpecialistList { CARDIOLOGIE, PNEUMOLOGIE, DERMATOLOGIE, NEUROLOGIE, ENDOCRINOLOGIE }
+
     
     public Specialist(int id, int userId, int rate, SpecialistList role) {
         this.id = id;
