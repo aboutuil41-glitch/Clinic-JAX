@@ -5,55 +5,45 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import ma.youcode.clinic.DAO.SpecialistJDBC;
-import ma.youcode.clinic.DAO.UserJDBC;
+import jakarta.ws.rs.BadRequestException;
 import ma.youcode.clinic.Models.Specialist;
-import ma.youcode.clinic.Models.User;
 import ma.youcode.clinic.dto.SpecialisteDto;
+import ma.youcode.clinic.repository.SpecialistRepository;
 
 public class SpecialistesService {
-    private final SpecialistJDBC Specialistjdbc = new SpecialistJDBC();
-    private final UserJDBC Userjdbc = new UserJDBC();
+
+    private final SpecialistRepository specialistRepository = new SpecialistRepository();
 
     public List<SpecialisteDto> lister(String specialite) {
-    Specialist.SpecialistList sp;
-    try{
-        sp = Specialist.SpecialistList.valueOf(specialite.toUpperCase());
-    }catch(IllegalArgumentException e) {
-        throw new IllegalArgumentException("Invalid specialite: " + specialite);
-    }
 
-    Predicate<Specialist> filter = new Predicate<Specialist>() {
-        public boolean test(Specialist s) {
-            return s.getRole() == sp;
-        };
-    };
-    Comparator<Specialist> sort = new Comparator<Specialist>() {
-        @Override
-        public int compare(Specialist o1, Specialist o2) {
-            // TODO Auto-generated method stub
-            return Integer.compare(o1.getRate(), o2.getRate());
+        // 1. Check the specialty, otherwise 400
+        if (specialite == null) {
+            throw new BadRequestException("Specialty is required");
         }
-    };
 
-    Function<Specialist, SpecialisteDto> map = new Function<Specialist, SpecialisteDto>() {
-        public SpecialisteDto apply(Specialist s) {
-            return new SpecialisteDto(
-            s.getId(),
-            getName(s),
-            s.getRole(),
-            s.getRate()
-        );
-        };
-    };
+        Specialist.SpecialistList sp;
+        try {
+            sp = Specialist.SpecialistList.valueOf(specialite.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Unknown specialty: " + specialite);
+        }
 
+        // 2. Predicate, Comparator and Function
+        Predicate<Specialist> hasSpecialty = s -> s.getRole() == sp;
 
-    return Specialistjdbc.findAll().stream().filter(filter).sorted(sort).map(map).toList();
-}
+        Comparator<Specialist> byRate = Comparator.comparingInt(Specialist::getRate);
 
-    private String getName(Specialist s) {
-        return Userjdbc.findById(s.getUserId())
-                .map(User::getName)
-                .orElse("Unknown");
+        Function<Specialist, SpecialisteDto> toDto = s -> new SpecialisteDto(
+                s.getId(),
+                s.getUser().getName(),
+                s.getRole(),
+                s.getRate());
+
+        // 3. Filter, sort by fee, convert to DTO
+        return specialistRepository.findAll().stream()
+                .filter(hasSpecialty)
+                .sorted(byRate)
+                .map(toDto)
+                .toList();
     }
 }
