@@ -1,12 +1,28 @@
 package ma.youcode.clinic.Models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
+
+    @Column(name = "email")
     private String Email;
+
+    @Column(name = "password")
     private String Password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private UserRole Role;
+
+    protected User() { }
 
     public User(int id, String name, String email, String password, UserRole role) {
         this.id = id;
@@ -16,23 +32,20 @@ public class User {
         Role = role;
     }
 
-     
     public enum UserRole {
-    Doctor,
-    Nurse,
-    SPECIALISTE,
+        Doctor,
+        Nurse,
+        SPECIALISTE,
     }
 
     public int getId() {
         return id;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }
 
-    
     public String getName() {
         return name;
     }
@@ -64,5 +77,8 @@ public class User {
     public void setRole(UserRole role) {
         Role = role;
     }
-    
+
+    @OneToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 }
