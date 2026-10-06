@@ -12,24 +12,24 @@ public class Main {
 
         DataInit.init();
 
-        String password = BCrypt.hashpw("1234", BCrypt.gensalt(12));
+        // String password = BCrypt.hashpw("1234", BCrypt.gensalt(12));
 
-        UserJDBC userDao = new UserJDBC();
+        // UserJDBC userDao = new UserJDBC();
 
-        userDao.save(new User(0, "Ahmed Benali", "ahmed@clinic.com",
-                password, User.UserRole.Doctor));
+        // userDao.save(new User(0, "Ahmed Benali", "ahmed@clinic.com",
+        //         password, User.UserRole.Doctor));
 
-        userDao.save(new User(0, "Sara Amrani", "sara@clinic.com",
-                password, User.UserRole.Doctor));
+        // userDao.save(new User(0, "Sara Amrani", "sara@clinic.com",
+        //         password, User.UserRole.Doctor));
 
-        userDao.save(new User(0, "Youssef Alaoui", "youssef@clinic.com",
-                password, User.UserRole.Doctor));
+        // userDao.save(new User(0, "Youssef Alaoui", "youssef@clinic.com",
+        //         password, User.UserRole.Doctor));
 
-        userDao.save(new User(0, "Nadia Mansouri", "nadia@clinic.com",
-                password, User.UserRole.Nurse));
+        // userDao.save(new User(0, "Nadia Mansouri", "nadia@clinic.com",
+        //         password, User.UserRole.Nurse));
 
-        userDao.save(new User(0, "Imane Berrada", "imane@clinic.com",
-                password, User.UserRole.Nurse));
+        // userDao.save(new User(0, "Imane Berrada", "imane@clinic.com",
+        //         password, User.UserRole.Nurse));
 
     }
 }
