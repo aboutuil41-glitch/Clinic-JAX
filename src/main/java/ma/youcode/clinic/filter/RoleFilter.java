@@ -34,18 +34,18 @@ public class RoleFilter implements Filter {
         User user = (User) session.getAttribute("user");
 
         if (path.startsWith("/user/doctor") &&
-            user.getRole() != User.UserRole.Doctor) {
+            user.getRole() != User.UserRole.GENERALISTE) {
 
             res.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
 
-        if (path.startsWith("/user/nurse") &&
-            user.getRole() != User.UserRole.Nurse) {
+        // if (path.startsWith("/user/nurse") &&
+        //     user.getRole() != User.UserRole.Nurse) {
 
-            res.sendError(HttpServletResponse.SC_FORBIDDEN);
-            return;
-        }
+        //     res.sendError(HttpServletResponse.SC_FORBIDDEN);
+        //     return;
+        // }
 
         chain.doFilter(request, response);
     }
