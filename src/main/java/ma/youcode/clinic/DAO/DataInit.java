@@ -70,7 +70,7 @@ public class DataInit {
                     + "FOREIGN KEY (specialist_id) REFERENCES specialists(id))");
 
             // ---- Test accounts: 1 generalist, 2 specialists ----
-            ensureUser(conn, "Dr. Alami", "generaliste@clinic.ma", "generaliste123", "Doctor");
+            ensureUser(conn, "Dr. Alami", "generaliste@clinic.ma", "generaliste123", "GENERALISTE");
             int cardioUserId = ensureUser(conn, "Dr. Benani", "cardio@clinic.ma", "specialiste123", "SPECIALISTE");
             int pneumoUserId = ensureUser(conn, "Dr. Chraibi", "pneumo@clinic.ma", "specialiste123", "SPECIALISTE");
 
@@ -89,7 +89,16 @@ public class DataInit {
         try (PreparedStatement select = conn.prepareStatement("SELECT id FROM users WHERE email = ?")) {
             select.setString(1, email);
             try (ResultSet rs = select.executeQuery()) {
-                if (rs.next()) return rs.getInt("id");
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    // fix old rows (e.g. role "Doctor" -> "GENERALISTE")
+                    try (PreparedStatement fix = conn.prepareStatement("UPDATE users SET role = ? WHERE id = ?")) {
+                        fix.setString(1, role);
+                        fix.setInt(2, id);
+                        fix.executeUpdate();
+                    }
+                    return id;
+                }
             }
         }
         try (PreparedStatement insert = conn.prepareStatement(
@@ -122,4 +131,4 @@ public class DataInit {
             insert.executeUpdate();
         }
     }
-} 
+}
