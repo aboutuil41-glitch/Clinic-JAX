@@ -2,6 +2,7 @@ package ma.youcode.clinic.resources;
 
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -14,6 +15,7 @@ import ma.youcode.clinic.services.SpecialistesService;
 @Produces(MediaType.APPLICATION_JSON)
 public class SpecialistesResources {
     private final SpecialistesService Service = new SpecialistesService();
+    @RolesAllowed("GENERALISTE")
     @GET 
     public List<SpecialisteDto> lister(@QueryParam("specialiste") String specialiste){
         return Service.lister(specialiste);
