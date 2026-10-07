@@ -13,28 +13,27 @@ public class User {
     private String name;
 
     @Column(name = "email")
-    private String Email;
+    private String email;
 
     @Column(name = "password")
-    private String Password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private UserRole Role;
+    private UserRole role;
 
     protected User() { }
 
     public User(int id, String name, String email, String password, UserRole role) {
         this.id = id;
         this.name = name;
-        Email = email;
-        Password = password;
-        Role = role;
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     public enum UserRole {
-        Doctor,
-        Nurse,
+        GENERALISTE,
         SPECIALISTE,
     }
 
@@ -55,29 +54,29 @@ public class User {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public UserRole getRole() {
-        return Role;
+        return role;
     }
 
     public void setRole(UserRole role) {
-        Role = role;
+        this.role = role;
     }
 
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     private Specialist specialist;
 }
