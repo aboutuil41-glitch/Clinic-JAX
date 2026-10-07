@@ -79,6 +79,5 @@ public class User {
     }
 
     @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
+    private Specialist specialist;
 }

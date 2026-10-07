@@ -1,5 +1,8 @@
 package ma.youcode.clinic.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -59,6 +62,13 @@ public class Specialist {
 
     public void setRole(SpecialistList role) {
         this.role = role;
+    }
+
+    @OneToMany(mappedBy = "specialist")
+    private List<DemandeExpertise> demande = new ArrayList<>();
+    
+    public List<DemandeExpertise> getDemande() {
+        return demande;
     }
 
     @OneToOne
