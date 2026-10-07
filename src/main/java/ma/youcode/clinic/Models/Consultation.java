@@ -1,11 +1,26 @@
 package ma.youcode.clinic.Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "consultations")
+
 public class Consultation {
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String Reason;
+    @Enumerated(EnumType.STRING)
     private Status statue;
     private String Observation;
     private String Diagnosis;
@@ -14,13 +29,10 @@ public class Consultation {
     private LocalDateTime Time;
     private int PatientId;
     private int DoctorId;
+    
 
-    public enum Status {
-        TERMINEE
-    }
-
-    public Consultation(int id, String reason, Status statue, String observation, String diagnosis,
-            String treatment, double cost, LocalDateTime time, int patientId, int doctorId) {
+    public Consultation(int id, String reason, Status statue, String observation, String diagnosis, String treatment,
+            double cost, LocalDateTime time, int patientId, int doctorId) {
         this.id = id;
         Reason = reason;
         this.statue = statue;
@@ -31,6 +43,14 @@ public class Consultation {
         Time = time;
         PatientId = patientId;
         DoctorId = doctorId;
+    }
+
+    public Consultation() {
+        Time = LocalDateTime.now();
+    }
+
+    public enum Status {
+        TERMINEE
     }
 
     public int getId() {
@@ -112,4 +132,7 @@ public class Consultation {
     public void setDoctorId(int doctorId) {
         DoctorId = doctorId;
     }
+    
+
+    
 }
