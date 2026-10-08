@@ -16,7 +16,6 @@ public class SpecialistesService {
 
     public List<SpecialisteDto> lister(String specialite) {
 
-        // 1. Check the specialty, otherwise 400
         if (specialite == null) {
             throw new BadRequestException("Specialty is required");
         }
@@ -28,7 +27,6 @@ public class SpecialistesService {
             throw new BadRequestException("Unknown specialty: " + specialite);
         }
 
-        // 2. Predicate, Comparator and Function
         Predicate<Specialist> hasSpecialty = s -> s.getRole() == sp;
 
         Comparator<Specialist> byRate = Comparator.comparingInt(Specialist::getRate);
@@ -39,7 +37,6 @@ public class SpecialistesService {
                 s.getRole(),
                 s.getRate());
 
-        // 3. Filter, sort by fee, convert to DTO
         return specialistRepository.findAll().stream()
                 .filter(hasSpecialty)
                 .sorted(byRate)
