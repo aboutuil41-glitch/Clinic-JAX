@@ -20,7 +20,10 @@ public class DemandExpertiserep {
 
     public void createDemand(DemandeExpertise d){
         EntityManager em = JpaUtil.createEntityManager();
+        em.getTransaction().begin();
         em.persist(d);
+        em.getTransaction().commit();
+        
         em.close();
     }
 }
