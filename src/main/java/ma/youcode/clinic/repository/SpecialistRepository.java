@@ -29,4 +29,15 @@ public class SpecialistRepository {
             em.close();
         }
     }
+    public Optional<Specialist> findByUserId(int userId) {
+        EntityManager em = JpaUtil.createEntityManager();
+        try {
+            return em.createQuery(
+                "SELECT s FROM Specialist s WHERE userId = :userId",
+                Specialist.class
+            ).setParameter("userId", userId).getResultStream().findFirst();
+        } finally {
+            em.close();
+        }
+    }
 }
