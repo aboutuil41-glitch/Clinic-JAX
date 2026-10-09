@@ -15,6 +15,7 @@ import ma.youcode.clinic.services.DemandeExpertiseService;
 public class DemandExpertise {
 
     private static final DemandeExpertiseService  de = new DemandeExpertiseService();
+    
 
     @POST
     public Response createDemand(CreateDemandeDto dto){
