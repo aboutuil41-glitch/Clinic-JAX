@@ -23,6 +23,12 @@ public class CsrfFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
+        String apiPrefix = req.getContextPath() + "/api/";
+        if (req.getRequestURI().startsWith(apiPrefix)) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         HttpSession session = req.getSession(true);
         String token = (String) session.getAttribute("csrfToken");
         if (token == null) {
