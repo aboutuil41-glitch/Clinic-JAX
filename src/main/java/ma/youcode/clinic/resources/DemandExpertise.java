@@ -16,7 +16,7 @@ public class DemandExpertise {
 
     private static final DemandeExpertiseService  de = new DemandeExpertiseService();
 
-    @POST 
+    @POST
     public Response createDemand(CreateDemandeDto dto){
         de.checkUp(dto.getConsultationId(), dto.getSpecialisteId(), dto.getQuestion(), dto.getPriorite());
         return Response
