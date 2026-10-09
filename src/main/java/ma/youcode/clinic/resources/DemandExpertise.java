@@ -2,11 +2,14 @@ package ma.youcode.clinic.resources;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import ma.youcode.clinic.dto.CreateDemandeDto;
+import ma.youcode.clinic.dto.ReponseDto;
 import ma.youcode.clinic.services.DemandeExpertiseService;
 
 @Path ("/DemandExperttise")
@@ -25,5 +28,13 @@ public class DemandExpertise {
         .entity(dto)
         .build();
     } 
+
+    @PUT
+    @Path("{id}/response")
+    public Response answerQuestion(@PathParam("id") Long id, ReponseDto dto){
+        de.modify(id, dto.getOpinion(), dto.getRecommendations());
+        return Response.ok().build();
+    }
+
     
 }
