@@ -1,10 +1,10 @@
 package ma.youcode.clinic.Models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,133 +16,94 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "consultations")
-
 public class Consultation {
-    @Id 
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String Reason;
+    @Column(name = "reason")
+    private String reason;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status statue;
-    private String Observation;
-    private String Diagnosis;
-    private String Treatment;
-    private double Cost;
-    private LocalDateTime Time;
-    private int PatientId;
-    private int DoctorId;
-    
 
-    public Consultation(int id, String reason, Status statue, String observation, String diagnosis, String treatment,
-            double cost, LocalDateTime time, int patientId, int doctorId) {
-        this.id = id;
-        Reason = reason;
-        this.statue = statue;
-        Observation = observation;
-        Diagnosis = diagnosis;
-        Treatment = treatment;
-        Cost = cost;
-        Time = time;
-        PatientId = patientId;
-        DoctorId = doctorId;
-    }
+    @Column(name = "observation")
+    private String observation;
 
-    public Consultation() {
-        Time = LocalDateTime.now();
-    }
+    @Column(name = "diagnosis")
+    private String diagnosis;
+
+    @Column(name = "treatment")
+    private String treatment;
+
+    @Column(name = "cost")
+    private double cost;
+
+    @Column(name = "date")
+    private LocalDateTime time;
+
+    @Column(name = "patient_id")
+    private int patientId;
+
+    @Column(name = "doctor_id")
+    private int doctorId;
+
+    @OneToMany(mappedBy = "consultation")
+    private List<DemandeExpertise> demande = new ArrayList<>();
 
     public enum Status {
         TERMINEE
     }
 
-    public int getId() {
-        return id;
+    public Consultation() {
+        this.time = LocalDateTime.now();
     }
 
-    public void setId(int id) {
+    public Consultation(int id, String reason, Status statue, String observation, String diagnosis,
+            String treatment, double cost, LocalDateTime time, int patientId, int doctorId) {
         this.id = id;
-    }
-
-    public String getReason() {
-        return Reason;
-    }
-
-    public void setReason(String reason) {
-        Reason = reason;
-    }
-
-    public Status getStatue() {
-        return statue;
-    }
-
-    public void setStatue(Status statue) {
+        this.reason = reason;
         this.statue = statue;
+        this.observation = observation;
+        this.diagnosis = diagnosis;
+        this.treatment = treatment;
+        this.cost = cost;
+        this.time = time;
+        this.patientId = patientId;
+        this.doctorId = doctorId;
     }
 
-    public String getObservation() {
-        return Observation;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setObservation(String observation) {
-        Observation = observation;
-    }
+    public String getReason() { return reason; }
+    public void setReason(String reason) { this.reason = reason; }
 
-    public String getDiagnosis() {
-        return Diagnosis;
-    }
+    public Status getStatue() { return statue; }
+    public void setStatue(Status statue) { this.statue = statue; }
 
-    public void setDiagnosis(String diagnosis) {
-        Diagnosis = diagnosis;
-    }
+    public String getObservation() { return observation; }
+    public void setObservation(String observation) { this.observation = observation; }
 
-    public String getTreatment() {
-        return Treatment;
-    }
+    public String getDiagnosis() { return diagnosis; }
+    public void setDiagnosis(String diagnosis) { this.diagnosis = diagnosis; }
 
-    public void setTreatment(String treatment) {
-        Treatment = treatment;
-    }
+    public String getTreatment() { return treatment; }
+    public void setTreatment(String treatment) { this.treatment = treatment; }
 
-    public double getCost() {
-        return Cost;
-    }
+    public double getCost() { return cost; }
+    public void setCost(double cost) { this.cost = cost; }
 
-    public void setCost(double cost) {
-        Cost = cost;
-    }
+    public LocalDateTime getTime() { return time; }
+    public void setTime(LocalDateTime time) { this.time = time; }
 
-    public LocalDateTime getTime() {
-        return Time;
-    }
+    public int getPatientId() { return patientId; }
+    public void setPatientId(int patientId) { this.patientId = patientId; }
 
-    public void setTime(LocalDateTime time) {
-        Time = time;
-    }
+    public int getDoctorId() { return doctorId; }
+    public void setDoctorId(int doctorId) { this.doctorId = doctorId; }
 
-    public int getPatientId() {
-        return PatientId;
-    }
-
-    public void setPatientId(int patientId) {
-        PatientId = patientId;
-    }
-
-    public int getDoctorId() {
-        return DoctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        DoctorId = doctorId;
-    }
-    
-    @OneToMany(mappedBy = "consultation")
-    private List<DemandeExpertise> demande = new ArrayList<>();
-    
-    public List<DemandeExpertise> getDemande() {
-        return demande;
-    }
-
-
-    
+    public List<DemandeExpertise> getDemande() { return demande; }
 }
