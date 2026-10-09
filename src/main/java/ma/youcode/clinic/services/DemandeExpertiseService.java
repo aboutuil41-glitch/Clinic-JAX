@@ -46,5 +46,24 @@ public class DemandeExpertiseService {
         DemandExpertiserep de = new DemandExpertiserep();
         de.createDemand(demande);
     }
+
+        public void modify(Long id, String answer, String reccomendation){
+        DemandExpertiserep de = new DemandExpertiserep();
+        if (answer == null || answer.isBlank()) {
+            throw new BadRequestException("Question cannot be empty");
+        }
+        if (reccomendation == null || reccomendation.isBlank()) {
+            throw new BadRequestException("Priorite is required");
+        }
+        
+
+        DemandeExpertise demande = de.getById(id).orElseThrow(() -> new NotFoundException("Demand was not found"));
+        demande.setOpinion(answer);
+        demande.setRecommendations(reccomendation);
+        demande.setStatus(DemandeExpertise.Status.TERMINEE);
+
+        de.update(demande);
+    }
 }
+
  
