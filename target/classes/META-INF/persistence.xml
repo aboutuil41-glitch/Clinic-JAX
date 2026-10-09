@@ -9,6 +9,8 @@
 
         <class>ma.youcode.clinic.Models.Specialist</class>
         <class>ma.youcode.clinic.Models.User</class>
+        <class>ma.youcode.clinic.Models.DemandeExpertise</class>
+        <class>ma.youcode.clinic.Models.Consultation</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
