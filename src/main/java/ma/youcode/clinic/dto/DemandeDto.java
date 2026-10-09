@@ -5,7 +5,7 @@ public record DemandeDto(
         String question,
         String priorite,
         String status,
-        String avis,
+        String opinion,
         String recommendations,
         String dateCreation,
         int consultationId,

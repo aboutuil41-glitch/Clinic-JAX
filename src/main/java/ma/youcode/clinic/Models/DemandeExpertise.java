@@ -33,7 +33,7 @@ public class DemandeExpertise {
     private Status status;
 
     @Column(name = "opinion")
-    private String avis;
+    private String opinion;
 
     @Column(name = "reccomendation")   // spelled like this in your table
     private String recommendations;
@@ -76,8 +76,8 @@ public class DemandeExpertise {
     public Status getStatus() { return status; }
     public void setStatus(Status status) { this.status = status; }
 
-    public String getAvis() { return avis; }
-    public void setAvis(String avis) { this.avis = avis; }
+    public String getOpinion() { return opinion; }
+    public void setOpinion(String opinion) { this.opinion = opinion; }
 
     public String getRecommendations() { return recommendations; }
     public void setRecommendations(String recommendations) { this.recommendations = recommendations; }
