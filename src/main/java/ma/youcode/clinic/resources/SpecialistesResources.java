@@ -63,7 +63,7 @@ public class SpecialistesResources {
                         d.getQuestion(),
                         d.getPriorite().name(),
                         d.getStatus().name(),
-                        d.getAvis(),
+                        d.getOpinion(),
                         d.getRecommendations(),
                         String.valueOf(d.getDateCreation()),
                         d.getConsultation().getId(),
